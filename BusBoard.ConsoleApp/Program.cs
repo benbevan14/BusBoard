@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net;
-using System.Text.RegularExpressions;
-using Newtonsoft.Json;
+using MarkEmbling.PostcodesIO;
 using RestSharp;
+using System.Linq;
 
 namespace BusBoard.ConsoleApp
 {
@@ -16,60 +16,57 @@ namespace BusBoard.ConsoleApp
 
         static void Main(string[] args)
         {
+            // Security Protocol
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
 
-            Console.WriteLine("start the ting");
+            Console.WriteLine("Enter a Postcode");
+            var postcodeInput = Console.ReadLine().Replace(" ", "");
 
+
+
+            // Creating a client to access the api for the site TFL (Transport for London)
             var client = new RestClient("https://api.tfl.gov.uk");
+            // Creating a client to access postcodes API
+            var postcodeClient = new PostcodesIOClient();
 
-            Location hop = new Location(51.49984, -0.124663, "SW1A0AA", 500);
+            var postcodeResult = postcodeClient.Lookup(postcodeInput);
 
-            var request = new RestRequest("StopPoint/?lat=" + hop.Latitude.ToString() 
-                                        + "&lon=" + hop.Longitude.ToString()
-                                        + "&stopTypes=NaptanPublicBusCoachTram" + "&radius=" + hop.Radius.ToString(), Method.GET);
+            Console.WriteLine(postcodeResult.Latitude);
+            Console.WriteLine(postcodeResult.Longitude);
 
+            // Get the stop points nearby within the radius. 
+            var request = new RestRequest("StopPoint/?lat=" +postcodeResult.Latitude.ToString() 
+                                        + "&lon=" + postcodeResult.Longitude.ToString()
+                                        + "&stopTypes=NaptanPublicBusCoachTram" + "&radius=" + 500, Method.GET);
+
+            // Adding credentials for the API tfl 
             request.AddHeader("app_id", "f1b7f9a2b331460dad132b97645ca624");
             request.AddHeader("app_key", "b47323ef3b2145e78eda7cf2321e28f9");
 
-            StopPoint response = client.Execute<StopPoint>(request).Data;
+            // This collecting a response for the request and turning it into bus stop object 
+            StopPoint stopPoint = client.Execute<StopPoint>(request).Data;
+            List<BusStop> stops = stopPoint.stopPoints;
 
-            foreach (BusStop b in response.stopPoints)
+            // Displays the stop data in radius
+            for (int i = 0; i < 5; i++)
             {
-                Console.WriteLine(b.ToString());
+                Console.WriteLine(stops[i].ToString());
+            }
+           
+
+            request = new RestRequest("StopPoint/" + stops[0].naptanId + "/Arrivals", Method.GET);
+
+
+            var response = client.Execute<List<Arrival>>(request).Data.OrderBy(arrival => arrival.timeToStation);
+
+            
+
+            foreach (var arrival in response)
+            {
+                Console.WriteLine(arrival.ToString());
             }
 
-            //foreach (BusStop b in response)
-            //{
-            //    Console.WriteLine(b.ToString());
-            //}
-
-            //dynamic content = JsonConvert.DeserializeObject(response.Content);
-
-            //var stops = content["stopPoints"];
-
-            //List<BusStop> busStops = new List<BusStop>();
-
-            //foreach (var entry in stops)
-            //{
-            //    string data = entry.ToString().Replace(@"""", "");
-            //    string naptanId = Regex.Match(data, @"naptanId: [^\n,]+").Value.Substring(10);
-            //    string common = Regex.Match(data, @"commonName: [^\n,.]+").Value.Substring(12);
-            //    string distance = Regex.Match(data, @"distance: [^\n,]+").Value.Substring(10);
-            //    busStops.Add(new BusStop(naptanId, common, double.Parse(distance)));
-            //}
-
-            //foreach (var bus in busStops)
-            //{
-            //    Console.WriteLine(bus.ToString());
-            //}
-
-            //Console.WriteLine("\n\n\n\n\n");
-
-            //request = new RestRequest("StopPoint/" + busStops[2].naptanId + "/Arrivals");
-
-            //response = client.Get(request);
-
-            //Console.WriteLine(response.Content);
+            
 
             Console.WriteLine("done");
 
