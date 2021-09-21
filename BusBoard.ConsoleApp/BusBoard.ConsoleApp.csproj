@@ -82,13 +82,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Arrival.cs" />
-    <Compile Include="BusStop.cs" />
-    <Compile Include="PostcodeRequest.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StopPoint.cs" />
-    <Compile Include="TFLRequest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

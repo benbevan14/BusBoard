@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MarkEmbling.PostcodesIO;
 
-namespace BusBoard.ConsoleApp
+namespace BusBoard.Api
 {
     public class PostcodeRequest
     {
