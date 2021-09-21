@@ -1,14 +1,34 @@
-﻿@model BusBoard.Web.ViewModels.BusInfo
+﻿@model List<BusBoard.Web.ViewModels.BusInfo>
 @{
-  ViewBag.Title = "Bus Information";
+    ViewBag.Title = "Bus Information";
 }
 
 <h2>BusInfo</h2>
 
 <div class="row">
-    <p>You entered postcode @Model.PostCode</p>
-    <p>The closest bus stop is:</p>
-    <p>@Model.StopName</p>
-    <p>@Model.Distance</p>
-    <p>@Model.NaptanID</p>
+    <p>You entered postcode @Model[0].PostCode</p>
+    <p>The closest bus stops are:</p>
+    <ul>
+        @foreach (var stop in Model)
+        {
+            <li>
+                <p>@stop.StopName &emsp; Distance away: @Convert.ToInt32(stop.Distance)m</p>
+
+                <hr>
+                @if (stop.Arrivals.Count == 0)
+                {
+                    <p><strong>There are no Buses at this time!</strong></p>
+                    <br>
+                }
+
+                @foreach (var x in stop.Arrivals)
+                {
+                    <p>@x.ToString()</p>
+                }
+                <br>
+            </li>
+
+        }
+    </ul>
+
 </div>

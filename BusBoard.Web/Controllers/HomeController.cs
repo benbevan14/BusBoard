@@ -27,9 +27,16 @@ namespace BusBoard.Web.Controllers
             // Get the bus stops within radius of the postcode from the tfl api
             TFLRequest tflReq = new TFLRequest();
             List<BusStop> stops = tflReq.QueryTFLBusStop(postcodeResult);
-            BusStop first = stops[0];
 
-            var info = new BusInfo(selection.Postcode, first.naptanId, first.commonName, first.distance);
+            List<BusInfo> info = new List<BusInfo>();
+
+            for (int i = 0; i < 5; i++)
+            {
+                List<Arrival> arrivals = tflReq.QueryTFLArrival(stops[i]);
+                info.Add(new ViewModels.BusInfo(selection.Postcode, stops[i].naptanId, stops[i].commonName, stops[i].distance, arrivals));
+            }
+
+            //var info = new BusInfo(selection.Postcode, first.naptanId, first.commonName, first.distance);
             return View(info);
         }
 
