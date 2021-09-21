@@ -14,7 +14,7 @@ namespace BusBoard.ConsoleApp
 
         public override string ToString()
         {
-            return naptanId + " : " + commonName + " : " + distance.ToString("0.00");
+            return naptanId + " : " + commonName + " : " + (int) distance + "m";
         }
     }
 }
