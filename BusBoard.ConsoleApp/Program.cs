@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net;
-using MarkEmbling.PostcodesIO;
-using RestSharp;
-using System.Linq;
 
 namespace BusBoard.ConsoleApp
 {
