@@ -181,9 +181,19 @@ button,
 html input[type="button"],
 input[type="reset"],
 input[type="submit"] {
-  cursor: pointer;
-  -webkit-appearance: button;
+    cursor: pointer;
+    -webkit-appearance: button;
 }
+
+button,
+html input[type="button"],
+input[type="reset"],
+input[type="submit"]:hover {
+    cursor: pointer;
+    -webkit-appearance: button;
+    box-shadow: 5px 10px #888888 !important;
+}
+
 
 button[disabled],
 html input[disabled] {
