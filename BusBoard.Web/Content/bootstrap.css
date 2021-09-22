@@ -183,6 +183,8 @@ input[type="reset"],
 input[type="submit"] {
     cursor: pointer;
     -webkit-appearance: button;
+    border-radius: 10px;
+    border-color: black;
 }
 
     button,
@@ -191,7 +193,8 @@ input[type="submit"] {
     input[type="submit"]:hover {
         cursor: pointer;
         -webkit-appearance: button;
-        box-shadow: 5px 10px #888888 !important;
+        box-shadow: 3px 3px 10px #333333;
+
     }
 
 
@@ -338,11 +341,11 @@ html {
 }
 
 body {
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: "Montserrat", Helvetica, Arial, sans-serif;
     font-size: 14px;
     line-height: 1.428571429;
     color: #333333;
-    background-color: #428bca;
+    background-color: #6DBFDB;
 }
 
 input,
@@ -4694,25 +4697,25 @@ textarea.input-group-sm > .input-group-btn > .btn {
 }
 
 .navbar-default .navbar-link {
-    color: #777777;
+    color: #ffffff;
 }
 
     .navbar-default .navbar-link:hover {
-        color: #333333;
+        color: #6DAEF2;
     }
 
 .navbar-inverse {
-    background-color: #f00;
-    border-color: #080808;
+    background-color: #6885E8;
+    border-color: #6885E8;
 }
 
     .navbar-inverse .navbar-brand {
-        color: #999999;
+        color: #ffffff;
     }
 
         .navbar-inverse .navbar-brand:hover,
         .navbar-inverse .navbar-brand:focus {
-            color: #ffffff;
+            color: #a4d0ff;
             background-color: transparent;
         }
 
@@ -4721,12 +4724,12 @@ textarea.input-group-sm > .input-group-btn > .btn {
     }
 
     .navbar-inverse .navbar-nav > li > a {
-        color: #999999;
+        color: #ffffff;
     }
 
         .navbar-inverse .navbar-nav > li > a:hover,
         .navbar-inverse .navbar-nav > li > a:focus {
-            color: #ffffff;
+            color: #a4d0ff;
             background-color: transparent;
         }
 
@@ -5159,6 +5162,7 @@ a.list-group-item.active > .badge,
     .jumbotron {
         padding-top: 48px;
         padding-bottom: 48px;
+        margin-top: 10px;
     }
 
     .container .jumbotron {
