@@ -20,10 +20,9 @@ namespace BusBoard.Api
         public List<BusStop> QueryTFLBusStop(MarkEmbling.PostcodesIO.Results.PostcodeResult postcodeResult)
         {
             // Get the stop points nearby within the radius. 
-            
-                var request = new RestRequest("StopPoint/?lat=" + postcodeResult.Latitude.ToString()
-                                            + "&lon=" + postcodeResult.Longitude.ToString()
-                                            + "&stopTypes=NaptanPublicBusCoachTram" + "&radius=" + 500, Method.GET);
+            var request = new RestRequest("StopPoint/?lat=" + postcodeResult.Latitude.ToString()
+                                        + "&lon=" + postcodeResult.Longitude.ToString()
+                                        + "&stopTypes=NaptanPublicBusCoachTram" + "&radius=" + 500, Method.GET);
             
 
             // Add credentials for the TFL api 

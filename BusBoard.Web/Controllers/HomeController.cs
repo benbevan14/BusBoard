@@ -24,6 +24,11 @@ namespace BusBoard.Web.Controllers
             PostcodeRequest postReq = new PostcodeRequest();
             var postcodeResult = postReq.QueryPostcode(selection.Postcode);
 
+            if (postcodeResult == null)
+            {
+                // Do a thing to reroute to the error page
+            }
+
             // Get the bus stops within radius of the postcode from the tfl api
             TFLRequest tflReq = new TFLRequest();
             List<BusStop> stops = tflReq.QueryTFLBusStop(postcodeResult);
