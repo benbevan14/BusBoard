@@ -18,7 +18,14 @@ namespace BusBoard.Api
 
         public MarkEmbling.PostcodesIO.Results.PostcodeResult QueryPostcode(string input)
         {
-            return Client.Lookup(input);
+            var result = Client.Lookup(input);
+            if (result == null)
+            {
+                return Client.Lookup("SW1A 0AA");
+            }
+            return result;
         }
+
+
     }
 }
